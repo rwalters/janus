@@ -11,4 +11,4 @@ ADD Gemfile.lock /server/Gemfile.lock
 RUN gem install bundler
 RUN bundle install
 
-CMD bundle exec ruby paycheck_server.rb
+CMD bundle exec ruby janus_server.rb
