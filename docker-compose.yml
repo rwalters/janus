@@ -23,3 +23,5 @@ services:
     working_dir: /client
     volumes:
       - .:/client
+    links:
+      - server

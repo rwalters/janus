@@ -2,8 +2,13 @@ FROM ruby:2.3
 
 RUN echo "deb http://ftp.us.debian.org/debian jessie-backports main" | tee -a /etc/apt/sources.list
 
+RUN mkdir /server
+RUN cd /server
+WORKDIR /server
+
 ADD Gemfile /server/Gemfile
 ADD Gemfile.lock /server/Gemfile.lock
+RUN gem install bundler
 RUN bundle install
 
 CMD bundle exec ruby paycheck_server.rb
