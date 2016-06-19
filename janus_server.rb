@@ -30,16 +30,18 @@ class ServerImpl < Janus::Janus::Service
     GRPC.logger.info(get_mission_req)
 
     GetMissionResp.new(
-      mission: gen_mission(mission_name: "Mission response")
+      mission: gen_mission(mission_name: 'Mission response')
     )
   end
 
-
   private
 
-  def gen_mission(company_name: "Namely", mission_name: "Test Mission")
+  def gen_mission(company_name: 'Namely', mission_name: 'Test Mission')
     @mission_generator ||= Generators::Mission.new
-    @mission_generator.call(company_name: company_name, mission_name: mission_name)
+    @mission_generator.call(
+      company_name: company_name,
+      mission_name: mission_name
+    )
   end
 
   def gen_mission_list
@@ -50,7 +52,7 @@ end
 
 port = ENV.fetch('PORT', '50051')
 s = GRPC::RpcServer.new
-s.add_http2_port("0.0.0.0:#{ port }", :this_port_is_insecure)
+s.add_http2_port("0.0.0.0:#{port}", :this_port_is_insecure)
 GRPC.logger.info("... running on #{port}")
 s.handle(ServerImpl.new)
 s.run_till_terminated

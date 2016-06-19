@@ -9,7 +9,7 @@ Logging.logger.root.level = :info
 
 stub = Janus::Janus::Stub.new('server:50051', :this_channel_is_insecure)
 
-GRPC.logger.info("#{'='*20}\nCreate a Mission\n")
+GRPC.logger.info("#{'=' * 20}\nCreate a Mission\n")
 GRPC.logger.info(
   stub.create_mission(
     CreateMissionReq.new(
@@ -18,8 +18,8 @@ GRPC.logger.info(
   ).inspect
 )
 
-GRPC.logger.info("#{'='*20}\nGet a Mission\n")
+GRPC.logger.info("#{'=' * 20}\nGet a Mission\n")
 GRPC.logger.info(stub.get_mission(GetMissionReq.new).inspect)
 
-GRPC.logger.info("#{'='*20}\nGet a Mission List\n")
+GRPC.logger.info("#{'=' * 20}\nGet a Mission List\n")
 GRPC.logger.info(stub.get_mission_list(GetMissionListReq.new).inspect)
