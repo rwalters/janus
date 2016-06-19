@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile-server
+    ports:
+      - 50051
+    environment:
+      PORT: 50051
+    working_dir: /server
+    volumes:
+      - .:/server
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile-client
+    ports:
+      - 50051
+    environment:
+      PORT: 50051
+    working_dir: /client
+    volumes:
+      - .:/client
