@@ -8,6 +8,8 @@ WORKDIR /server
 
 ADD Gemfile /server/Gemfile
 ADD Gemfile.lock /server/Gemfile.lock
+ADD lib /server
+
 RUN gem install bundler
 RUN bundle install
 

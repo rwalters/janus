@@ -8,6 +8,8 @@ WORKDIR /client
 
 ADD Gemfile /client/Gemfile
 ADD Gemfile.lock /client/Gemfile.lock
+ADD lib /client
+
 RUN gem install bundler
 RUN bundle install
 
