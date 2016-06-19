@@ -1,5 +1,4 @@
 require 'common'
-require 'securerandom'
 
 # Configure its logging for fine-grained log control during test runs
 module GRPC
@@ -40,24 +39,14 @@ class ServerImpl < Janus::Janus::Service
 
   private
 
-  def gen_mission(company_name: "Namely", mission_name: "Test Mission")
-    name_length = SecureRandom.random_number(9) + 1
-    id = SecureRandom.random_number(900) + 100
-
-    Mission.new(
-      id: id,
-      company_name: "#{company_name}_#{id}",
-      client_id: name_length**2,
-      mission_name: mission_name*name_length
-    )
+  def mission_gen(company_name: "Namely", mission_name: "Test Mission")
+    @mission_generator ||= Generators::Mission.new
+    @mission_generator.call(company_name: company_name, mission_name: mission_name)
   end
 
-  def gen_mission_list
-    list_length = SecureRandom.random_number(9) + 1
-
-    list_length.times.map do
-      gen_mission(mission_name: 'Gen Mission List')
-    end
+  def mission_list_gen
+    @mission_list_generator ||= Generators::MissionList.new
+    @mission_list_generator.call
   end
 end
 
