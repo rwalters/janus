@@ -1,12 +1,25 @@
-require 'common'
+require_relative 'common'
 
-stub = Janus::Janus::Stub.new('app:50051', :this_channel_is_insecure)
+# Configure its logging for fine-grained log control during test runs
+module GRPC
+  extend Logging.globally
+end
+Logging.logger.root.appenders = Logging.appenders.stdout
+Logging.logger.root.level = :info
 
-p stub.create_address(
+stub = Janus::Janus::Stub.new('server:50051', :this_channel_is_insecure)
+
+GRPC.logger.info("#{'='*20}\nCreate a Mission\n")
+GRPC.logger.info(
+  stub.create_mission(
     CreateMissionReq.new(
       mission: Generators::Mission.new.call
     )
-  )
+  ).inspect
+)
 
-p stub.get_address(GetMissionReq.new(id: "test"))
-p stub.get_address_list(GetMissionListReq.new)
+GRPC.logger.info("#{'='*20}\nGet a Mission\n")
+GRPC.logger.info(stub.get_mission(GetMissionReq.new).inspect)
+
+GRPC.logger.info("#{'='*20}\nGet a Mission List\n")
+GRPC.logger.info(stub.get_mission_list(GetMissionListReq.new).inspect)
