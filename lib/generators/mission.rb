@@ -1,6 +1,12 @@
 module Generators
-  # Create a *protobuf* _Mission_ object for gRPC
+  # A class to hold code to randomly generate an instance of Mission
   class Mission
+    # A generator to create a random Mission
+    #
+    # @param company_name [String] Defaults to 'Namely'
+    # @param mission_name [String] Defaults to 'Test Mission'
+    # @return [Mission]
+    #   A randomly generated instance of Mission
     def call(company_name: 'Namely', mission_name: 'Default Mission Name')
       id = SecureRandom.random_number(900) + 100
 
